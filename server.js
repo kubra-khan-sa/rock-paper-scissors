@@ -2,7 +2,6 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const socketio = require("socket.io");
-const url = require('url');
 
 const app = express();
 
@@ -16,12 +15,8 @@ const {userConnected, connectedUsers, initializeChoices, moves, makeMove, choice
 const {createRoom, joinRoom, exitRoom, rooms} = require("./util/rooms");
 const e = require("express");
 const { exitCode } = require("process");
-const { log } = require("console");
 
 io.on("connection", socket => {
-    const parsedUrl = url.parse(socket.request.headers.referer, true);
-    console.log('Parsed URL:', parsedUrl);
-    const userId = parsedUrl.query.user_id;
     socket.on("create-room", (roomId) => {
         if(rooms[roomId]){
             const error = "This room already exists";
